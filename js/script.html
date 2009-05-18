@@ -1,0 +1,67 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title></title>
+    <script type="text/javascript">
+      
+      
+      //what about return values from functions?
+      //this looks like JSON???
+      //
+      //Object literal in Javascript
+      myObject= {
+  
+        objectVar: 'variable value here',
+        objectVarTwo: 'variable 2 value here',
+  
+        firstMethod:function(){
+          return 'this is return value';
+          //statements ending with ; here
+        }, //comma after each method element of an object
+  
+        secondMethod:function(arg1, arg2){
+
+          a1 = arg1;
+          a2 = arg2;
+          return a1 + " " + a2;
+        },
+  
+        thirdMethod:function(){
+        }
+      }
+
+      //window.onload = myObject.firstMethod;
+      //window.onload = myObject.secondMethod(bla, bla2);
+
+
+      //innerHTML is a IE but other browsers support it too. not a DOM standard
+      //window.onLoad = alert(myObject.firstMethod()); //returns 'this is return value'
+      //window.onLoad = alert(myObject.firstMethod); //returns entire function text. call to function() missing . instead firstMethod returns its own signature.
+
+
+      document.write(myObject.firstMethod()); //with empty parameters
+      document.write("<br><br>");    
+      document.write(myObject.secondMethod); //without parameter returns the value assigned to it as string for the whole function.
+      document.write("<br><br>");    
+      document.write(myObject.secondMethod('marek', 'jay'));
+      document.write("<br> variable: " + myObject.objectVar); //returns the value but call with () param does not return anything.
+      
+      
+      
+      
+      
+      
+      
+      
+    </script>
+    
+    
+    
+    
+    
+    
+  </head>
+  <body>
+  </body>
+</html>

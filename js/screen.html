@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script type="text/javascript">
+      //screen
+      document.write('screen :'+ screen.width + ' x ' + screen.height);
+      document.write('<br>avail screen:' + screen.availWidth + ' x ' + screen.availHeight);
+      document.write('<br>color depth:' + screen.colorDepth);
+      
+      
+      //string literal
+      var myS = "this is a string"; //primitive
+      
+      document.write('<br>length should be 16:' + myS.length);
+      document.write('<br>indexOf should be 3 (first occurance):' + myS.indexOf("s"));
+      document.write('<br>indexOf should be -1 (not found):' + myS.indexOf("bla"));
+      document.write('<br>substr 2,7 should be \'is is a\':' + myS.substr(2,7));
+      
+      //string object explicit as Object and not string literal
+      oStr = new String("string object here"); 
+      
+      document.write("<br>string object output: " + oStr);
+      
+      // date stuff
+      toDate = new Date();
+      document.write("<br>date: " + toDate);
+      
+      
+      
+    </script>
+    <title>screen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    
+    <script type="text/javascript">
+      //array 
+      var anArray = new Array();
+      var itemIndex = 0;
+      var itemKeyword = "CostOfApple";
+      
+      //hash based on index number given
+      anArray[itemIndex] = "Fruit";
+      // hash based on itemKeyword given
+      anArray[itemKeyword] = 0.75;
+      //
+      document.write( "<br>" + anArray[itemIndex] + "<br>" );
+      document.write( anArray[itemKeyword] );
+      
+      //date
+      var d = new Date;
+      var currentMonth = d.getMonth();
+      document.write("<br>date<br>");
+      var monthAbbrs = ['jan','feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+      document.write("this month abbriviation is: ");
+      document.write(monthAbbrs[currentMonth]);
+      
+    </script>
+  </body>
+</html>

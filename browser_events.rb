@@ -1,3 +1,8 @@
+# Watirloo::Browser::HtmlSaver
+# Watirloo::Browser::EventsPublisher
+# Watirloo::Browser::SessionSaver
+# Watirloo::Browser::Manager
+
 # Watirloo addition: let Watir watch your browser navigation events
 # and save your html as you do exploratory testing
 # ISSUE: :response somehow blocks the HtmlSaver in some of my pages. don't know why
@@ -14,24 +19,31 @@ class BrowserEventsPublisher
   
   def initialize( ie )
     puts "BrowserEventsPublisher started for #{ie.hwnd}"
-    @events_to_publish = %w[BeforeNavigate2 DocumentComplete NavigateError NewWindow3]
+    @events_to_publish = %w[BeforeNavigate2 DocumentComplete NavigateError NewWindow3 OnQuit]
     @ie, @ie_object = ie, ie.ie
-    @events_sink = WIN32OLE_EVENT.new( @ie_object, 'DWebBrowserEvents2' )
+    @event_sink = WIN32OLE_EVENT.new( @ie_object, 'DWebBrowserEvents2' )
   end
   
   def browser
     return @ie
   end
-  
+
   def run
-    @events_to_publish.each do |event_to_publish|
-      @events_sink.on_event(event_to_publish) do |*args|
+    return unless browser.exists?
+    @alive = true
+    @events_to_publish.each do |event_name|
+      @event_sink.on_event(event_name) do |*args|
         changed
-        notify_observers( event_to_publish )
+        notify_observers( event_name )
+        @alive = false if event_name == "OnQuit" 
       end
     end
     puts "start publishing"
-    loop { WIN32OLE_EVENT.message_loop }
+    #loop { WIN32OLE_EVENT.message_loop }
+    begin 
+      WIN32OLE_EVENT.message_loop
+    end while @alive
+    puts "stopped liestening. browser no longer available for listening"  
   end
 end
 
@@ -47,8 +59,8 @@ class BrowserEventsListener
 
   def update event_name
     puts event_name
-    @saver.save(:request) if event_name == "BeforeNavigate2" #save the html page as is right before submit
-    @saver.save(:response) if event_name == "DocumentComplete"
+    #@saver.save(:request) if event_name == "BeforeNavigate2" #save the html page as is right before submit
+    #@saver.save(:response) if event_name == "DocumentComplete"
   end
   
 end
@@ -63,34 +75,13 @@ class HtmlSaver
   def initialize( browser )
     puts "HtmlSaver started for #{browser.hwnd}"
     @browser = browser
-    @event=:response #by convention we save response aka the way the page loaded
   end
 
-  def save(event=:response)
-    @event = event
+  
+  def save
     return false unless @browser.exists?
-    (return false unless ensure_complete) if (event == :response)
-    save_html
-  end
-  
-  private
-  
-  def ensure_complete
-    begin
-      Watir::Waiter.wait_until { @browser.document.readyState == 'complete'}
-      puts "complete reached"
-      sleep 10 #artificial extra time TODO investigate why the page does not load completely with this code  
-    rescue Watir::Exception::TimeOutException
-      return false
-    end
-    return true
-  end
-  
-  def save_html
-    puts "save_html called for event: #{@event}"
     @timestamp = Time.now.strftime('%m%d_%H%M_%S')
     html = prepare_html
-    puts "we have html"
     File.open("#{@timestamp}.html", 'w') {|f| f.write(html)}
   end
   
@@ -128,7 +119,6 @@ end
 if $0 == __FILE__
   require 'watir'
   ie = Watir::IE.attach( :url, // )
-  
   events_publisher = BrowserEventsPublisher.new( ie )
   BrowserEventsListener.new events_publisher
   events_publisher.run

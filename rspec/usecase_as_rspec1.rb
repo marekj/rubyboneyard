@@ -1,83 +1,77 @@
 require 'spec/autorun'
 Spec::Runner.configure do |config|
-  
+  # ?
 end
-# make a class as a collection of scenarios execute itself as rspec ExampleGroup
- 
+
+$a = []
+$a << "begin"
 class UseCase
-  attr_accessor :scenario
+  attr_accessor :scenario, :bla
   
   def initialize
     @scenario = [:do_this, :do_that]
+    @bla = "bla"
   end
   
   def do_this
-    #puts 'this'
+    $a << "this for #{self.inspect}"
+    puts $a.inspect
     'this'.should == 'this'
   end
   
   def do_that
-    #puts 'that'
+    $a << "that for #{self.inspect}"
+    puts $a.inspect
     'that'.should == 'that'
   end
   
   def do_some_other
-    #puts 'some other'
+    $a << 'some other'
+    puts 'some other'
     'some'.should == 'somea'
   end
-  
-  def run_as_rspec
-    uc = self
-    describe "#{uc.class.to_s}" do
-      context "context" do
-        uc.scenario.each do |sc|
-          it "#{sc}" do
-            uc.send sc
-          end
+
+  def self.run_as_rspec(name='usecase_as_rspec_examples')
+    uc = self.new
+    yield uc if block_given?
+    #puts "#{uc.inspect}"
+    example_group_name = "#{uc.class.to_s} - #{name}"
+    example_group_class = describe example_group_name do
+      #$a << self
+      subject {uc}
+      uc.scenario.each do |sc|
+        it "#{sc}" do
+          uc.send sc
         end
       end
     end
+    puts example_group_class.inspect
+    #Spec::Runner.options.add_example_group example_group_class #incject the example group to run
+    #puts Spec::Runner.options.inspect
+    #Spec::Runner.run #run all example groups that have not been run
+    #Spec::Runner.options.remove_example_group example_group_class #incject the example group to run
   end
+
 end
- 
-uc = UseCase.new
-uc.run_as_rspec
-#uc.scenario = [:do_some_other];uc.run_as_rspec
-#uc.do_some_other #no as rspec
-uc.scenario = [:do_this]
-uc.run_as_rspec
 
-#uc.scenario = [:do_this]
-#uc.run_as_rspec
+UseCase.run_as_rspec('happy')
 
+UseCase.run_as_rspec('foo') do |uc|
+  uc.scenario = [:do_that]
+  uc.bla = 'foo'
+end
+$a << "done1"
+UseCase.run_as_rspec('bar') do |uc|
+  uc.scenario = [:do_this]
+  uc.bla = 'bar'
+end
 
-## The Specs
-# 
-#require File.dirname(__FILE__) + "/spec_helper"
-#require File.dirname(__FILE__) + "/../lib/use_case"
-# 
-# 
-#describe UseCase do
-#  context 'when first init' do
-#    
-#    before :each do
-#      @uc = UseCase.new
-#    end
-#    
-#    it 'has given scenario' do
-#      @uc.run_as_rspec #.should be(Spec::Example::ExampleGroup::Subclass_2)
-#    end
-#    
-#    it 'has no scenario add example to the group anyway' do
-#      @uc.scenario = [:do_some_other]
-#      #@uc.run_as_rspec.should be(Spec::Example::ExampleGroup::Subclass_3)
-#      @uc.run_as_rspec
-#    end
-#    
-#    it 'provide scenario' do
-#      @uc.scenario = [:do_this, :do_that, :do_some_other]
-#      @uc.run_as_rspec
-#    end
-#    
-#  end
-#end
+$a << 'done2'
+UseCase.run_as_rspec('baz') do |uc|
+  uc.scenario = [:do_that]
+  uc.bla = "baz"
+end
+
+$a << 'exit here'
+puts $a.inspect # => 'done' will be the only item becasue the rspec exampes will run at_exit
+

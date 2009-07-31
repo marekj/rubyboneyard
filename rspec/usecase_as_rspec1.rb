@@ -75,3 +75,9 @@ end
 $a << 'exit here'
 puts $a.inspect # => 'done' will be the only item becasue the rspec exampes will run at_exit
 
+
+describe "simple test" do
+  it 'simple ex' do
+    1.should == 1
+  end
+end

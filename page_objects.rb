@@ -1,4 +1,5 @@
 require 'watir'
+require File.dirname(__FILE__) + "/object_instance_exec"
 require 'pp'
 
 
@@ -24,10 +25,8 @@ module Page
 
   module ClassMethods
     def face(facename, *args, &block)
-      module_eval do
-        define_method(facename) do |*args|
-          page.instance_exec(*args, &block) # page is always the receiver
-        end
+      define_method(facename) do |*args|
+        page.instance_exec(*args, &block) # page is always the receiver
       end
     end
   end

@@ -1,4 +1,5 @@
 require 'watir' # needs html/person.html file
+require File.dirname(__FILE__) + "/object_instance_exec"
 require 'pp'
 
 module Page

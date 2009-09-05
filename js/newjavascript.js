@@ -8,7 +8,8 @@ javascript: var sty = document.styleSheets; var display = ""; for(var i=0;i<sty.
 
 //To List All The Links on the Page:
 javascript:var hyperLinks = document.links; var display = ""; for(var i=0;i<hyperLinks.length;i++){display = display+hyperLinks[i]+"<br/>";}document.write(display);
-
+//shorter version
+javascript:var h = document.links; var d = ""; for(var i=0;i<h.length;i++){d=d+"<p>"+h[i]+"<p/>";}document.write(d);
 //To Convert Date From Long format to Readable and vice Versa:
 javascript:prompt("hi", new Number(new Date('Thu Jan 01 00:00:00 CST 2009')))
 javascript:prompt("hi", new String(new Date(1230789600000)))

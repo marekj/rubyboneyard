@@ -1,0 +1,4 @@
+let's try to do some sinatra work here.
+
+idea
+make url and redicrect to login

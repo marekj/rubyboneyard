@@ -5,7 +5,7 @@ File.foreach(file) {|e| lines << e}
 
 # this feels procedural => days = lines[8..37]
 # let's find the rows that begin with day number instead
-days = lines.map {|e| e.strip}.select {|e| e.match(/^[1-3]/)}
+days = lines.map {|e| e.strip}.select {|e| e.match(/^[1-9]/)}
 
 #and grab first 3 columns
 days_temps = days.map {|e| e.split(" ")[0..2]}

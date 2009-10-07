@@ -48,7 +48,7 @@ class TC_wow < Watir::TestCase
 end
 
 
-require File.dirname(__FILE__) + '/test_unit_space_spy'
+require (File.dirname(__FILE__) + '/testunit_space_spy')
 # get the yaml representation of all TestCases loaded in ObjectSpace
 #puts 'Watir TestCases to Run'
 #p Test::Unit::SpaceSpy.tests
@@ -83,7 +83,7 @@ require File.dirname(__FILE__) + '/test_unit_space_spy'
 class TC_testspacespy < Test::Unit::TestCase
   
   def test_to_a
-    Test::Unit::ObjectSpaceSuite.to_a.should == [
+    Test::Unit::SpaceSpy.to_a.should == [
       ["TC_me", ["test_me", "test_you"]], 
       ["TC_abc", ["test_bla", "test_yay"]], 
       ["HelloWorld Context Name", ["test_spec {HelloWorld Context Name} 001 [the it method]", "test_spec {HelloWorld Context Name} 002 [some other thing]"]], 
@@ -111,6 +111,6 @@ class TC_testspacespy < Test::Unit::TestCase
   - - test_to_a
     - test_to_yaml
 EOF
-    Test::Unit::ObjectSpaceSuite.to_yaml.should == ydoc
+    Test::Unit::SpaceSpy.to_yaml.should == ydoc
   end
 end

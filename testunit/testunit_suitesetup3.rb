@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/test_unit_space_spy'
+require File.dirname(__FILE__) + '/testunit_space_spy'
 
 class TC_me < Test::Unit::TestCase
   def test_me

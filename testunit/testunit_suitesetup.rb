@@ -61,7 +61,8 @@ end
 # http://silkandspinach.net/2007/06/09/setup-and-teardown-for-a-ruby-testsuite/
 
 
-class Suite < Test::Unit::TestSuite
+class MySuite < Test::Unit::TestSuite
+  
   def self.suite
     # provided test cases here
   end
@@ -83,4 +84,5 @@ end
 
 require 'test/unit/testsuite'
 require 'test/unit/ui/console/testrunner'
-Test::Unit::UI::Console::TestRunner.run(Suite)
+Test::Unit::UI::Console::TestRunner.run(T)
+#Test::Unit::UI::Console::TestRunner.run(MySuite)

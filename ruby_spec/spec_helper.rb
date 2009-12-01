@@ -1,5 +1,5 @@
-require File.join(File.dirname(__FILE__), %w[.. lib i_heart_ruby])
-require 'spec'
+#require File.join(File.dirname(__FILE__), %w[.. lib i_heart_ruby])
+require 'spec/autorun'
 require 'pp'
 
 class Object

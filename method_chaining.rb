@@ -49,3 +49,18 @@ speak.
 #"the"
 #"world"
 
+=begin
+goodbye
+blue
+monday
+hello
+world
+watir
+library
+is
+the
+best
+in
+the
+world
+=end

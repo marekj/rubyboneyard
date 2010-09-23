@@ -5,7 +5,7 @@ lines = []
 File.foreach(file) {|e| lines << e}
 
 #grab records for days and temps
-days = lines[8..37]
+days = lines[8..37] # very static assumption start with line 9 and up to line 39
 days_temps = days.map {|e| e.split(" ")[0..2]}
 
 # calculate spreads for each day

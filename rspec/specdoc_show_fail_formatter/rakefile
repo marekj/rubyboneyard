@@ -1,0 +1,6 @@
+require 'spec/rake/spectask'
+
+Spec::Rake::SpecTask.new(:spec) do |spec|
+  spec.spec_files = FileList['*_spec.rb']
+  spec.spec_opts << "-r specdoc_show_fail_formatter.rb -f SpecdocShowFailFormatter"
+end

@@ -1,20 +1,20 @@
-require 'spec'
+require 'spec/autorun'
 
 
 class Srun
   def self.before
-    'Hello Before'
+    puts 'Hello Before'
   end
 end
 
+
 Spec::Runner.configure do |c|
-  c.before Srun.before
+  c.append_before { Srun.before } # supply method body as block argument
 end
 
-  
-describe 'Someting'  do
+describe 'Someting' do
   it 'is green' do
-    'gree'.should == 'green'
+    'green'.should == 'green'
   end
 end
 

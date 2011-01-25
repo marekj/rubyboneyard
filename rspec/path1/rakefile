@@ -1,0 +1,7 @@
+require 'spec/autorun'
+require 'spec/rake/spectask'
+
+Spec::Rake::SpecTask.new do |t|
+  t.spec_files = FileList['path2/path3/**/*_spec.rb']
+end
+

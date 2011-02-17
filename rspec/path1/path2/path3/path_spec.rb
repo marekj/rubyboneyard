@@ -13,6 +13,11 @@ context "File.expand_path(pathname [, optionalstartingpoint])" do
     parts(p).should == ["path1", "path2", "path3", "path4"]
   end
 
+  specify "with /../pathname with __FILE__ as starting point disaster" do
+    p = File.expand_path "/../path4", __FILE__
+    parts(p).should_not == ["path1", "path2", "path3", "path4"]
+  end
+
   specify "bad relpath given pathname only (this will not work)" do
     p = File.expand_path "path4", __FILE__
     parts(p).should == ["path2", "path3", "path_spec.rb", "path4"]

@@ -21,6 +21,9 @@ describe "diff require foo file from path3" do
   end
 
   specify "up dir loads twice (relative path used)" do
+    #pp $LOAD_PATH
+    #require 'watir'
+    #pp $LOAD_PATH # now loadpath has rubygems libs that watir required
     r File.dirname(__FILE__) + '/../foo'
     r File.expand_path('../../foo', __FILE__)
 
@@ -37,5 +40,12 @@ describe "diff require foo file from path3" do
     # it reloads the same file twice since each time path is not uniq
     $x.should == ["foo5", "bar4", "foo4", "bar4"]
   end
+
+#  specify "File.join dirname + file (loads twice, once with relative and once with expand_path)" do
+#    r File.join(File.dirname(__FILE__), '..', 'foo') #relative
+#    $x.should == ["foo2"] # loads it first time
+#    r File.expand_path(File.join(File.dirname(__FILE__), '..', 'foo')) #full path will reload the foo again here
+#    $x.should == ["foo2", "foo2"] # OH NO! it loaded it again.. TRAP
+#  end
 
 end

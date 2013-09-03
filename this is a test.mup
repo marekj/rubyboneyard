@@ -1,0 +1,22 @@
+{
+  "title": "this is a test",
+  "id": 1,
+  "formatVersion": 2,
+  "ideas": {
+    "1": {
+      "title": "and more test",
+      "id": 2,
+      "ideas": {
+        "1": {
+          "title": "another",
+          "id": 6
+        },
+        "2": {
+          "title": "another ",
+          "id": 7
+        }
+      }
+    }
+  },
+  "links": []
+}
